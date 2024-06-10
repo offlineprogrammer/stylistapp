@@ -20,7 +20,7 @@ const schema = a.schema({
     .query()
     .arguments({ prompt: a.string().required() })
     .returns(a.ref("BedrockResponse"))
-    .authorization((allow) => [allow.publicApiKey()])
+    .authorization((allow) => [allow.authenticated()])
     .handler(
       a.handler.custom({ entry: "./generateStyle.js", dataSource: "bedrockDS" })
     ),

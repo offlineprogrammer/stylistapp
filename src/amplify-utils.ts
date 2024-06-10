@@ -9,5 +9,5 @@ import outputs from "../amplify_outputs.json";
 Amplify.configure(outputs);
 
 export const amplifyClient  = generateClient({
-    authMode: "apiKey",
+  authMode: "userPool",
   });

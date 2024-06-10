@@ -25,6 +25,17 @@ function App() {
   return (
     <div className="app-container">
       <div className="chat-container">
+        <div className="suggestions">
+          {loading ? (
+            <div className="suggestion-bubble">Loading...</div>
+          ) : (
+            result && (
+              <div className="suggestion-bubble whitespace-pre-wrap">
+                <p>{result}</p>
+              </div>
+            )
+          )}
+        </div>
         <div className="input-form-container">
           <form className="input-form" onSubmit={onSubmit}>
             <input
@@ -36,17 +47,6 @@ function App() {
             />
             <button className="search-button" type="submit">Get Suggestions</button>
           </form>
-        </div>
-        <div className="suggestions">
-          {loading ? (
-            <div className="suggestion-bubble">Loading...</div>
-          ) : (
-            result && (
-              <div className="suggestion-bubble whitespace-pre-wrap">
-                <p>{result}</p>
-              </div>
-            )
-          )}
         </div>
       </div>
     </div>

@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   background-color: #f8f9fa;
   padding: 20px;
   font-family: Arial, sans-serif;
@@ -11,43 +11,45 @@
 .chat-container {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   width: 100%;
   max-width: 800px;
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
+  height: 80vh; /* Make sure the container takes up a significant part of the viewport height */
 }
 
 .input-form-container {
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-bottom: 20px;
 }
 
 .input-form {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  width: 100%;
 }
 
 .wide-input {
-  margin-bottom: 10px;
+  flex: 1;
   padding: 14px;
   font-size: 16px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 20px 0 0 20px;
   outline: none;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .search-button {
-  padding: 14px;
+  padding: 14px 20px;
   font-size: 16px;
   background-color: #4285f4;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 0 20px 20px 0;
   cursor: pointer;
   outline: none;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -61,6 +63,8 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  overflow-y: auto; /* Ensure suggestions scroll if they exceed the container height */
+  flex-grow: 1; /* Take up remaining space in the container */
 }
 
 .suggestion-bubble {
@@ -70,5 +74,5 @@
   border-radius: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   max-width: 80%;
-  white-space: pre-wrap;
+  white-space: pre-wrap; /* Preserve whitespace and wrap text */
 }
