@@ -2,25 +2,30 @@ import {
   type ClientSchema,
   a,
   defineData,
-  defineFunction,
+
 } from "@aws-amplify/backend";
+
 
 export const MODEL_ID = "anthropic.claude-3-sonnet-20240229-v1:0";
 
-export const generateStyleFunction = defineFunction({
-  entry: "./generatestyle.ts",
-  environment: {
-    MODEL_ID,
-  },
-});
 
 const schema = a.schema({
-  generate: a
+
+  BedrockResponse: a.customType({
+    body: a.string(),
+    error: a.string(),
+  }),
+
+  generateStyle: a
     .query()
     .arguments({ prompt: a.string().required() })
-    .returns(a.string())
+    .returns(a.ref("BedrockResponse"))
     .authorization((allow) => [allow.publicApiKey()])
-    .handler(a.handler.function(generateStyleFunction)),
+    .handler(
+      a.handler.custom({ entry: "./generateStyle.js", dataSource: "bedrockDS" })
+    ),
+
+
 });
 
 export type Schema = ClientSchema<typeof schema>;

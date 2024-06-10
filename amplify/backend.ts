@@ -1,24 +1,38 @@
 import { defineBackend } from '@aws-amplify/backend';
 import { auth } from './auth/resource';
-import { MODEL_ID, data, generateStyleFunction } from './data/resource';
-import { Effect, PolicyStatement } from "aws-cdk-lib/aws-iam";
+import { MODEL_ID, data } from './data/resource';
 
-/**
- * @see https://docs.amplify.aws/react/build-a-backend/ to add storage, functions, and more
- */
+import {  PolicyStatement } from "aws-cdk-lib/aws-iam";
+import { Stack } from 'aws-cdk-lib';
+
+
 export const backend = defineBackend({
   auth,
   data,
-  generateStyleFunction
+
 });
 
-backend.generateStyleFunction.resources.lambda.addToRolePolicy(
+
+
+const bedrockDataSource = backend.data.resources.graphqlApi.addHttpDataSource(
+  "bedrockDS",
+  `https://bedrock-runtime.${Stack.of(backend.data).region}.amazonaws.com`,
+  {
+    authorizationConfig: {
+      signingRegion: Stack.of(backend.data).region,
+      signingServiceName: "bedrock",
+    },
+  }
+);
+
+bedrockDataSource.grantPrincipal.addToPrincipalPolicy(
   new PolicyStatement({
-    effect: Effect.ALLOW,
-    actions: ["bedrock:InvokeModel"],
     resources: [
-      `arn:aws:bedrock:*::foundation-model/${MODEL_ID}`,
+
+      `arn:aws:bedrock:${Stack.of(backend.data).region}::foundation-model/${MODEL_ID}`,
     ],
+    actions: ["bedrock:InvokeModel"],
+    
   })
 );
 
