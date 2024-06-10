@@ -1,49 +1,56 @@
 import { FormEvent, useState } from "react";
 import { generateStyle } from "./actions";
-
-
-
-
+import './App.css';
 
 function App() {
   const [result, setResult] = useState<string>("");
-  const [loading, setloading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    setloading(true);
+    setLoading(true);
     event.preventDefault();
 
     try {
       const formData = new FormData(event.currentTarget);
-      const data = await  generateStyle(formData);
-      const recipe = typeof data === "string" ? data : "No data returned";
-      setloading(false);
-      setResult(recipe);
+      const data = await generateStyle(formData);
+      const result = typeof data === "string" ? data : "No data returned";
+      setLoading(false);
+      setResult(result);
     } catch (e) {
       alert(`An error occurred: ${e}`);
+      setLoading(false);
     }
   };
 
   return (
-
-     <div className="app-container">
-           <form
-          onSubmit={onSubmit}
-          className=" p-4 flex flex-col items-center gap-4  max-w-full mx-auto"
-        >
-
-<div className="search-container">
-        <input type="text" className="wide-input"  id="prompt"
-            name="prompt"
-         placeholder="Enter your prompt" />
-        <button className="search-button">Generate</button>
+    <div className="app-container">
+      <div className="chat-container">
+        <div className="input-form-container">
+          <form className="input-form" onSubmit={onSubmit}>
+            <input
+              type="text"
+              className="wide-input"
+              id="prompt"
+              name="prompt"
+              placeholder="Enter your prompt"
+            />
+            <button className="search-button" type="submit">Get Suggestions</button>
+          </form>
+        </div>
+        <div className="suggestions">
+          {loading ? (
+            <div className="suggestion-bubble">Loading...</div>
+          ) : (
+            result && (
+              <div className="suggestion-bubble whitespace-pre-wrap">
+                <p>{result}</p>
+              </div>
+            )
+          )}
+        </div>
       </div>
-
-        </form>
-
     </div>
-
-  )
+  );
 }
 
-export default App
+export default App;

@@ -5,7 +5,7 @@ export function request(ctx) {
      const  prompt  = ctx.args; //`Suggest a style for a casual outfit today`;
 
      const system =
-    "You are a fashion stylist and you are helping a client choose a style . The client is a 30 years old male";
+    "You are a fashion stylist and you are helping a client choose a style ";
 
    
      return {
