@@ -16,14 +16,33 @@ const schema = a.schema({
     error: a.string(),
   }),
 
-  generateStyle: a
+    generateTextFromPrompt: a
     .query()
-    .arguments({ prompt: a.string().required() })
-    .returns(a.ref("BedrockResponse"))
-    .authorization((allow) => [allow.authenticated()])
+    .arguments({
+      text: a.string().required(),
+      sessionId: a.string().required(),
+    })
+    .returns(a.ref('BedrockKBResponse'))
+    .authorization((allow) => [allow.publicApiKey(), allow.authenticated()])
     .handler(
-      a.handler.custom({ entry: "./generateStyle.js", dataSource: "bedrockDS" })
+      a.handler.custom({
+        dataSource: 'BedrockHTTPDS',
+        entry: './retrieveAndGenerate.js',
+      })
     ),
+
+    BedrockKBResponse: a.customType({
+      text: a
+        .string()
+        .required()
+        .authorization((allow) => [allow.publicApiKey(), allow.authenticated()]),
+      sessionId: a
+        .string()
+        .required()
+        .authorization((allow) => [allow.publicApiKey(), allow.authenticated()]),
+    }),
+
+
 
 
 });

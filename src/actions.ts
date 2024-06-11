@@ -1,15 +1,15 @@
 import { amplifyClient } from "./amplify-utils";
 
-export async function generateStyle(formData: FormData) {
-    console.log("formData", formData.get("prompt")?.toString());
-  const response = await amplifyClient.queries.generateStyle({
-    prompt: formData.get("prompt")?.toString() || "",
-    });
+export async function generateTextFromPrompt(text: string, sessionId: string) {
+  console.log("text", text);
+  console.log("sessionId", sessionId);
+const response = await amplifyClient.queries.generateTextFromPrompt({
+  text: text,
+  sessionId: sessionId,
+  });
 
-    
+  
+  
 console.log(response);
-  const res = JSON.parse(response.data?.body);
-  const content = res.content[0].text;
-  console.log("content", content);
-  return content || "";
+return response || "";
 }
