@@ -31,6 +31,8 @@ const schema = a.schema({
       })
     ),
 
+
+
     BedrockKBResponse: a.customType({
       text: a
         .string()

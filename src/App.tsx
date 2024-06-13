@@ -109,35 +109,6 @@ console.log(data?.text);
         <button type="submit" className="submit-button">Send</button>
       </form>
     </div>
-
-
-    // <div className="app-container">
-    //   <div className="chat-container">
-    //     <div className="suggestions">
-    //       {loading ? (
-    //         <div className="suggestion-bubble">Loading...</div>
-    //       ) : (
-    //         result && (
-    //           <div className="suggestion-bubble whitespace-pre-wrap">
-    //             <p>{result}</p>
-    //           </div>
-    //         )
-    //       )}
-    //     </div>
-    //     <div className="input-form-container">
-    //       <form className="input-form" onSubmit={onSubmit}>
-    //         <input
-    //           type="text"
-    //           className="wide-input"
-    //           id="prompt"
-    //           name="prompt"
-    //           placeholder="Enter your prompt"
-    //         />
-    //         <button className="search-button" type="submit">Get Suggestions</button>
-    //       </form>
-    //     </div>
-    //   </div>
-    // </div>
   );
 }
 

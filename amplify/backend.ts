@@ -59,4 +59,11 @@ bedrockKBDatasource.grantPrincipal.addToPrincipalPolicy(
   })
 )
 
+bedrockKBDatasource.grantPrincipal.addToPrincipalPolicy(
+  new PolicyStatement({
+    resources: [`arn:aws:bedrock:us-east-1:279012124572:knowledge-base/SKOBM6FMJ7`],
+    actions: ['bedrock:Retrieve'],
+  })
+)
+
 

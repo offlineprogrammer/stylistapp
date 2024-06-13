@@ -6,18 +6,12 @@ export function request(ctx) {
         text: ctx.args.text,
       },
       retrieveAndGenerateConfiguration: {
-        externalSourcesConfiguration: {
-          modelArn: ctx.env.bedrockArn,
-          sources: [
-            {
-              s3Location: {
-                uri: ctx.env.bucketUri,
-              },
-              sourceType: 'S3',
-            },
-          ],
-        },
-        type: 'EXTERNAL_SOURCES',
+        type: 'KNOWLEDGE_BASE',
+        knowledgeBaseConfiguration: {
+            knowledgeBaseId: 'SKOBM6FMJ7',
+            modelArn: ctx.env.bedrockArn,
+        }
+
       },
     };
   
@@ -38,12 +32,18 @@ export function request(ctx) {
   }
   
   export function response(ctx) {
-    console.log('repsonse ctx', ctx)
-    const parsedBody = JSON.parse(ctx.result.body)
+    console.log('response ctx', ctx);
+    const parsedBody = JSON.parse(ctx.result.body);
+  
+    // Extract the main text response
+    let textResponse = parsedBody.output?.text || "Couldn't generate a response, Try again";
+  
     const res = {
-      text: parsedBody.citations[0].generatedResponsePart.textResponsePart.text,
+      text: textResponse,
       sessionId: parsedBody.sessionId,
-    }
-    console.log(res)
-    return res
+    };
+  
+    console.log(res);
+    return res;
   }
+  
